@@ -138,20 +138,20 @@
     - debug:
         var: front_sg_out
 
-    # - name: security group for backend-sg
-    #   amazon.aws.ec2_security_group:
-    #     name: backend-sg
-    #     description: backend-sg for web servers
-    #     vpc_id: "{{vpc_out.vpc.id}}"
-    #     region: "{{region}}"
-    #     rules:
-    #       - proto: tcp
-    #         from_port: 80
-    #         to_port: 80
-    #         group_id: 
-    #     tags:
-    #       Name: backend-sg
-    #   register: back_sg_out
+    - name: security group for backend-sg
+      amazon.aws.ec2_security_group:
+        name: backend-sg
+        description: backend-sg for web servers
+        vpc_id: "{{vpc_out.vpc.id}}"
+        region: "{{region}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            group_id: "{{front_sg_out.group_id}}"
+        tags:
+          Name: backend-sg
+      register: back_sg_out
 
-    # - debug:
-    #     var: back_sg_out
+    - debug:
+        var: back_sg_out
