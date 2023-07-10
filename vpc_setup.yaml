@@ -161,6 +161,7 @@
       amazon.aws.ec2_key:
         name: devops-key
         force: true
+        region: "{{region}}"
       register: key_out
 
     - debug:
