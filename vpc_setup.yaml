@@ -179,7 +179,7 @@
         name: "{{bastion_name}}"
         key_name: "devops-key"
         region: "{{region}}"
-        vpc_subnet_id: "{{PubSub1Cidr}}"
+        vpc_subnet_id: "{{pubsub1_out.subnet.id}}"
         instance_type: t2.micro
         security_group: "{{front_sg_out.group_id}}"
         network:
@@ -191,3 +191,7 @@
           Name: bastion_host'
         wait: true
         wait_timeout: 300
+      register: bastion_ec2_out
+
+    - debug:
+        var: pubsub1_out
