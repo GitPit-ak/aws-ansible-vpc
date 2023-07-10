@@ -91,10 +91,9 @@
 
     - name: Internet Gatewat setup
       ec2_vpc_igw:
-        vpc_id: "{{}}"
+        vpc_id: "{{vpc_out.vpc.id}}"
         region: "{{region}}"
         state: "{{state}}"
         resource_tags:
           name: vprofile-igw
       register: igw_out
-      
