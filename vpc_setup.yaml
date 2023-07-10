@@ -164,8 +164,8 @@
         region: "{{region}}"
       register: key_out
 
-    - debug:
-        var: key_out
+    # - debug:
+    #     var: key_out
 
     - name: saving the priv key
       copy:
@@ -174,27 +174,20 @@
       when: key_out.changed == true
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    # - name: create ec2 for bastion host
-    #   amazon.aws.ec2_instance:
-    #     name: "{{bastion_name}}"
-    #     key_name: "prod-ssh-key"
-    #     vpc_subnet_id: subnet-5ca1ab1e
-    #     instance_type: c5.large
-    #     security_group: default
-    #     network:
-    #       assign_public_ip: true
-    #     image_id: ami-123456
-    #     tags:
-    #       Environment: Testing
+    - name: create ec2 for bastion host
+      amazon.aws.ec2_instance:
+        name: "{{bastion_name}}"
+        key_name: "devops-key"
+        region: "{{region}}"
+        vpc_subnet_id: "{{PubSub1Cidr}}"
+        instance_type: t2.micro
+        security_group: "{{front_sg_out.group_id}}"
+        network:
+          assign_public_ip: true
+          delete_on_termination: true
+        image_id: "{{bastion_ami}}"
+        tags:
+          project: devops
+          Name: bastion_host'
+        wait: true
+        wait_timeout: 300
