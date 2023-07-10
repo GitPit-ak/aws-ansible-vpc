@@ -167,6 +167,12 @@
     - debug:
         var: key_out
 
+    - name: saving the priv key
+      copy:
+        content: "{{key_out.key.private_key}}"
+        dest: ./devops-key.pem
+
+
 
 
 
