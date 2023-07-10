@@ -95,5 +95,5 @@
         region: "{{region}}"
         state: "{{state}}"
         resource_tags:
-          name: vprofile-igw
+          Name: vprofile-igw
       register: igw_out
