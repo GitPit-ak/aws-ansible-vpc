@@ -1,4 +1,5 @@
 # Complete ansible automation setup
+![Cloud Architecture](https://github.com/GitPit-ak/aws-ansible-vpc/assets/44562876/d5d34464-8382-4d17-933e-64cdc3546ebd)
 
 ### Flow of execution 
 
