@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "https://json.schemastore.org/yamllint.json": "file:///c%3A/Users/asifv/Desktop/repo/aws-ansible-vpc/vars/vpc_setup"
+    }
+}

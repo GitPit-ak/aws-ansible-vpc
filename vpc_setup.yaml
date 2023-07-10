@@ -3,9 +3,9 @@
   gather_facts: false
   tasks:
     - name: import vpc variable
-      include_vars: vars/vpc_setup
+      include_vars: vpc_vars
 
-    - name: create vprofile vpc
+    - name: create devops vpc
       ec2_vpc_net:
         name: "{{vpc_name}}"
         cidr_block: "{{vpcCidr}}"
@@ -28,7 +28,7 @@
         state: "{{state}}"
         map_public: yes
         resource_tags:
-          Name: vprofile-pubsub1
+          Name: devops-pubsub1
       register: pubsub1_out
 
     - name: create Public subnet 2 for zone1
@@ -40,21 +40,8 @@
         state: "{{state}}"
         map_public: yes
         resource_tags:
-          Name: vprofile-pubsub2
+          Name: devops-pubsub2
       register: pubsub2_out
-
-    - name: create Public subnet 3 for zone1
-      amazon.aws.ec2_vpc_subnet:
-        vpc_id: "{{vpc_out.vpc.id}}"
-        cidr: "{{PubSub3Cidr}}"
-        region: "{{region}}"
-        az: "{{zone3}}"
-        state: "{{state}}"
-        map_public: yes
-        resource_tags:
-          Name: vprofile-pubsub3
-      register: pubsub3_out
-
 
     - name: create private subnet 1 for zone1
       amazon.aws.ec2_vpc_subnet:
@@ -64,7 +51,7 @@
         az: "{{zone1}}"
         state: "{{state}}"
         resource_tags:
-          Name: vprofile-privsub1
+          Name: devops-privsub1
       register: pubpriv1_out
 
     - name: create private subnet 2 for zone1
@@ -75,19 +62,8 @@
         az: "{{zone2}}"
         state: "{{state}}"
         resource_tags:
-          Name: vprofile-privsub2
+          Name: devops-privsub2
       register: pubpriv2_out
-
-    - name: create private subnet 3 for zone1
-      amazon.aws.ec2_vpc_subnet:
-        vpc_id: "{{vpc_out.vpc.id}}"
-        cidr: "{{PrivSub3Cidr}}"
-        region: "{{region}}"
-        az: "{{zone3}}"
-        state: "{{state}}"
-        resource_tags:
-          Name: vprofile-privsub3
-      register: pubpriv3_out
 
     - name: Internet Gatewat setup
       ec2_vpc_igw:
@@ -111,7 +87,6 @@
         subnets:
           - "{{pubsub1_out.subnet.id}}"
           - "{{pubsub2_out.subnet.id}}"
-          - "{{pubsub3_out.subnet.id}}"
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{igw_out.gateway_id}}"
@@ -136,7 +111,6 @@
         subnets:
           - "{{pubpriv1_out.subnet.id}}"
           - "{{pubpriv2_out.subnet.id}}"
-          - "{{pubpriv3_out.subnet.id}}"
         routes:
           - dest: 0.0.0.0/0
             gateway_id: "{{ NATGW_out.nat_gateway_id }}"

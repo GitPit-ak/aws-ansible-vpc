@@ -1,7 +1,0 @@
-bastion_ami: ami-069d73f3235b535bd
-
-#Region name 
-region: "us-east-2"
-
-#security groups
-MYIP: 192.168.1.13/32
