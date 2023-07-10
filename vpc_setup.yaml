@@ -74,8 +74,8 @@
           Name: vprofile-igw
       register: igw_out
 
-    - debug:
-        var: igw_out
+    # - debug:
+    #     var: igw_out
 
     - name: setup public subnet route table
       ec2_vpc_route_table:
@@ -92,26 +92,48 @@
             gateway_id: "{{igw_out.gateway_id}}"
       register: pubRT_out
 
-    - name: Create NAT gateway 
-      ec2_vpc_nat_gateway:
-        state: "{{state}}"
-        subnet_id: "{{pubsub1_out.subnet.id}}"
-        wait: yes
-        region: "{{region}}"
-        if_exist_do_not_create: true
-      register: NATGW_out
+    # - name: Create NAT gateway 
+    #   ec2_vpc_nat_gateway:
+    #     state: "{{state}}"
+    #     subnet_id: "{{pubsub1_out.subnet.id}}"
+    #     wait: yes
+    #     region: "{{region}}"
+    #     if_exist_do_not_create: true
+    #   register: NATGW_out
 
-    - name: setup private subnet route table
-      ec2_vpc_route_table:
+    # - name: setup private subnet route table
+    #   ec2_vpc_route_table:
+    #     vpc_id: "{{vpc_out.vpc.id}}"
+    #     region: "{{region}}"
+    #     state: "{{state}}"
+    #     tags:
+    #       Name: Vprofile-PrivRT
+    #     subnets:
+    #       - "{{pubpriv1_out.subnet.id}}"
+    #       - "{{pubpriv2_out.subnet.id}}"
+    #     routes:
+    #       - dest: 0.0.0.0/0
+    #         gateway_id: "{{ NATGW_out.nat_gateway_id }}"
+    #   register: privRT_out
+
+    - name: security group for frontend-sg
+      ec2_security_group:
+        name: frontend-sg
+        description: frontend-sg for web server's
         vpc_id: "{{vpc_out.vpc.id}}"
         region: "{{region}}"
-        state: "{{state}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
         tags:
-          Name: Vprofile-PrivRT
-        subnets:
-          - "{{pubpriv1_out.subnet.id}}"
-          - "{{pubpriv2_out.subnet.id}}"
-        routes:
-          - dest: 0.0.0.0/0
-            gateway_id: "{{ NATGW_out.nat_gateway_id }}"
-      register: privRT_out
+          Name: frontend-sg
+      register: frontend-sg-out
+
+    - debug:
+        var: frontend-sg-out
