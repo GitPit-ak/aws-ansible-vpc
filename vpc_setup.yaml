@@ -183,7 +183,7 @@
         instance_type: t2.micro
         security_group: "{{front_sg_out.group_id}}"
         network:
-          assign_public_ip: true
+          # assign_public_ip: true
           delete_on_termination: true
         image_id: "{{bastion_ami}}"
         tags:
@@ -193,7 +193,7 @@
         wait_timeout: 300
       register: bastion_ec2_out
 
-    - name: create ec2 for backend server
+    - name: create ec2 for web01 server
       amazon.aws.ec2_instance:
         name: web01
         key_name: "devops-key"
@@ -202,7 +202,7 @@
         instance_type: t2.micro
         security_group: "{{back_sg_out.group_id}}"
         network:
-          assign_public_ip: true
+          # assign_public_ip: true
           delete_on_termination: true
         image_id: "{{bastion_ami}}"
         tags:
@@ -213,5 +213,21 @@
       register: web01_ec2_out
 
 
-    - debug:
-        var: bastion_ec2_out
+    - name: create ec2 for web02 server
+      amazon.aws.ec2_instance:
+        name: web02
+        key_name: "devops-key"
+        region: "{{region}}"
+        vpc_subnet_id: "{{pubpriv2_out.subnet.id}}"
+        instance_type: t2.micro
+        security_group: "{{back_sg_out.group_id}}"
+        network:
+          # assign_public_ip: true
+          delete_on_termination: true
+        image_id: "{{bastion_ami}}"
+        tags:
+          project: devops
+          owner: asif
+        wait: true
+        wait_timeout: 300
+      register: web02_ec2_out
