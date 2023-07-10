@@ -188,10 +188,30 @@
         image_id: "{{bastion_ami}}"
         tags:
           project: devops
-          Name: bastion_host'
+          Name: bastion_host
         wait: true
         wait_timeout: 300
       register: bastion_ec2_out
 
+    - name: create ec2 for backend server
+      amazon.aws.ec2_instance:
+        name: web01
+        key_name: "devops-key"
+        region: "{{region}}"
+        vpc_subnet_id: "{{pubpriv1_out.subnet.id}}"
+        instance_type: t2.micro
+        security_group: "{{back_sg_out.group_id}}"
+        network:
+          assign_public_ip: true
+          delete_on_termination: true
+        image_id: "{{bastion_ami}}"
+        tags:
+          project: devops
+          owner: asif
+        wait: true
+        wait_timeout: 300
+      register: web01_ec2_out
+
+
     - debug:
-        var: pubsub1_out
+        var: bastion_ec2_out
