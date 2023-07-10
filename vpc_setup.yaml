@@ -97,3 +97,6 @@
         resource_tags:
           Name: vprofile-igw
       register: igw_out
+
+    - debug:
+      var: igw_out
