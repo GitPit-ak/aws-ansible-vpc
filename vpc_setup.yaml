@@ -16,8 +16,8 @@
         tenancy: default
       register: vpc_out
 
-    - debug:
-        var: vpc_out
+    # - debug:
+    #     var: vpc_out
 
     - name: create Public sebnet 1 for zone1
       amazon.aws.ec2_vpc_subnet:
@@ -30,3 +30,6 @@
         resource_tags:
           Name: vprofile-pubsub1
       register: pubsub1_out
+
+    - debug:
+        var: pubsub1_out
