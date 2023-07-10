@@ -119,7 +119,7 @@
     - name: security group for frontend-sg
       amazon.aws.ec2_security_group:
         name: frontend-sg
-        description: frontend-sg for web server's
+        description: frontend-sg for web servers
         vpc_id: "{{vpc_out.vpc.id}}"
         region: "{{region}}"
         rules:
