@@ -135,8 +135,8 @@
           Name: frontend-sg
       register: front_sg_out
 
-    - debug:
-        var: front_sg_out
+    # - debug:
+    #     var: front_sg_out
 
     - name: security group for backend-sg
       amazon.aws.ec2_security_group:
