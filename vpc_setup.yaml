@@ -19,7 +19,7 @@
     # - debug:
     #     var: vpc_out
 
-    - name: create Public sebnet 1 for zone1
+    - name: create Public subnet 1 for zone1
       amazon.aws.ec2_vpc_subnet:
         vpc_id: "{{vpc_out.vpc.id}}"
         cidr: "{{PubSub1Cidr}}"
@@ -31,7 +31,7 @@
           Name: vprofile-pubsub1
       register: pubsub1_out
 
-    - name: create Public sebnet 2 for zone1
+    - name: create Public subnet 2 for zone1
       amazon.aws.ec2_vpc_subnet:
         vpc_id: "{{vpc_out.vpc.id}}"
         cidr: "{{PubSub2Cidr}}"
@@ -43,7 +43,7 @@
           Name: vprofile-pubsub2
       register: pubsub2_out
 
-    - name: create Public sebnet 3 for zone1
+    - name: create Public subnet 3 for zone1
       amazon.aws.ec2_vpc_subnet:
         vpc_id: "{{vpc_out.vpc.id}}"
         cidr: "{{PubSub3Cidr}}"
@@ -54,3 +54,37 @@
         resource_tags:
           Name: vprofile-pubsub3
       register: pubsub3_out
+
+
+    - name: create private subnet 1 for zone1
+      amazon.aws.ec2_vpc_subnet:
+        vpc_id: "{{vpc_out.vpc.id}}"
+        cidr: "{{PrivSub1Cidr}}"
+        region: "{{region}}"
+        az: "{{zone1}}"
+        state: "{{state}}"
+        resource_tags:
+          Name: vprofile-privsub1
+      register: pubpriv1_out
+
+    - name: create private subnet 2 for zone1
+      amazon.aws.ec2_vpc_subnet:
+        vpc_id: "{{vpc_out.vpc.id}}"
+        cidr: "{{PrivSub2Cidr}}"
+        region: "{{region}}"
+        az: "{{zone2}}"
+        state: "{{state}}"
+        resource_tags:
+          Name: vprofile-privsub2
+      register: pubpriv2_out
+
+    - name: create private subnet 3 for zone1
+      amazon.aws.ec2_vpc_subnet:
+        vpc_id: "{{vpc_out.vpc.id}}"
+        cidr: "{{PrivSub3Cidr}}"
+        region: "{{region}}"
+        az: "{{zone3}}"
+        state: "{{state}}"
+        resource_tags:
+          Name: vprofile-privsub3
+      register: pubpriv3_out
