@@ -25,6 +25,10 @@ Security Groups (ansible)
 - ELB-SG and Bastion Host-SG
 - private server security groups
 
+Create key pairs for ec2 intances
+- bastion host
+- 2 private servers
+
 Ec2 (ansible)
 - bastion host in public subnet
 - 2 web server on each subnet

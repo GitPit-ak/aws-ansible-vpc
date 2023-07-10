@@ -153,5 +153,40 @@
           Name: backend-sg
       register: back_sg_out
 
+    # - debug:
+    #     var: back_sg_out
+
+
+    - name: create a new EC2 key pair
+      amazon.aws.ec2_key:
+        name: devops-key
+        force: true
+      register: key_out
+
     - debug:
-        var: back_sg_out
+        var: key_out
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # - name: create ec2 for bastion host
+    #   amazon.aws.ec2_instance:
+    #     name: "{{bastion_name}}"
+    #     key_name: "prod-ssh-key"
+    #     vpc_subnet_id: subnet-5ca1ab1e
+    #     instance_type: c5.large
+    #     security_group: default
+    #     network:
+    #       assign_public_ip: true
+    #     image_id: ami-123456
+    #     tags:
+    #       Environment: Testing

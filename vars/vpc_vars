@@ -23,3 +23,4 @@ state: present
 
 ##
 bastion_ami: ami-069d73f3235b535bd
+bastion_name: bastion-host
