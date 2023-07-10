@@ -133,7 +133,7 @@
             cidr_ip: 0.0.0.0/0
         tags:
           Name: frontend-sg
-      register: frontend-sg-out
+      register: front_sg_out
 
     - debug:
         var: frontend-sg-out
