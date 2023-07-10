@@ -117,7 +117,7 @@
     #   register: privRT_out
 
     - name: security group for frontend-sg
-      ec2_security_group:
+      amazon.aws.ec2_security_group:
         name: frontend-sg
         description: frontend-sg for web server's
         vpc_id: "{{vpc_out.vpc.id}}"
