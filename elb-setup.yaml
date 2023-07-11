@@ -42,7 +42,7 @@
             - TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-2:815569990111:targetgroup/Devop-TG/d548051753c82041"
               TargetGroupName: "Devop-TG"
               Type: "instance"
-            port: 80
+            Port: 80
             Protocol: "http"
         wait: true
 
