@@ -21,10 +21,9 @@
           - Id: i-0c397c9b7a19ec456
             Port: 80
         state: present
-        
         wait_timeout: 200
         wait: True
-        tag:
+        tags:
           Project: devops
 
 
