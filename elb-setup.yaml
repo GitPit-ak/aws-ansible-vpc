@@ -43,6 +43,6 @@
             - TargetGroupName: "Devop-TG"
               Type: "forward"
             Port: 80
-            Protocol: "http"
+            Protocol: "HTTP"
         wait: true
 
