@@ -267,3 +267,4 @@
           privRTid: privRT_out.route_table.id
           frontsgid: front_sg_out.group_id
           backsgid: back_sg_out.group_id
+        dest: vars/outpur_vars
