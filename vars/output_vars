@@ -9,12 +9,3 @@ privRTid: "rtb-0d0f35e80a023d63a"
 frontsgid: "sg-001d72bd9e8b20a2f"
 backsgid: "sg-0292daba3d1dac993"
 
-#Region name 
-region: "us-east-2"
-
-# Zones names
-zone1: us-east-2a
-zone2: us-east-2b
-
-state: present
-#

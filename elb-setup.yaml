@@ -25,6 +25,10 @@
         wait: True
         tags:
           Project: devops
+      register: elb_tgout
+
+    - debug:
+        var: elb_tgout
 
 
     - name: Setup ELB for web server
@@ -45,4 +49,9 @@
             Port: 80
             Protocol: "HTTP"
         wait: true
+        tags:
+          Project: devops
+        register: devops_elb
 
+    - debug:
+        var: devops_elb
