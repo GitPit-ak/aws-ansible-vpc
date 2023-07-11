@@ -8,13 +8,13 @@
         name: web02
         key_name: "devops-key"
         region: "us-east-2"
-        vpc_subnet_id: "{{subnet-0204105b84cd54866}}"
+        vpc_subnet_id: "subnet-0204105b84cd54866"
         instance_type: t2.micro
         security_group: "sg-0d687f254bd428569"
         network:
           # assign_public_ip: true
           delete_on_termination: true
-        image_id: "{{ami-069d73f3235b535bd}}"
+        image_id: "ami-069d73f3235b535bd"
         tags:
           project: devops
           owner: asif
