@@ -10,7 +10,7 @@
       amazon.aws.elb_classic_lb:
         name: "devops-ELB"
         state: present
-        region: "{{region}}"
+        region: "us-east-2"
         # zones:
         #   - "{{zone1}}"
         #   - "{{zone2}}"
@@ -18,15 +18,15 @@
         instance_ids:
           # - "{{web01_ec2_out_id}}"
           # - "{{web02_ec2_out_id}}"
-          - 
-          - 
-        security_group_ids: "{{frontsgid}}"
+          - "i-03f351c04414a5a6e"
+          - "i-066812c11c9a6eeab"
+        security_group_ids: "sg-007f6293b64e39fd9"
         scheme: internet-facing
         purge_instance_ids: true
         stickiness:
           - enabled 
         subnets:
-          - "{{pubsub1id}}"
+          - "subnet-0c795a5ccb35a7b7b"
         listeners:
           - protocol: http
             load_balancer_port: 80
