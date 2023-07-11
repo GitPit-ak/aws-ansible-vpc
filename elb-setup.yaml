@@ -12,15 +12,17 @@
       community.aws.elb_target_group:
         name: Devop-TG
         protocol: http
-        region: us-east-2
+        region: "{{region}}"
         port: 80
-        vpc_id: vpc-03b60bcb73c20dab9
+        vpc_id: "{{vpcid}}"
         health_check_protocol: http
         health_check_path: /
         successful_response_codes: "200,250-260"
         target_type: "instance"
         targets:
-          - Id: i-0c397c9b7a19ec456
+          - Id: "{{ web01_ec2_out.instance_ids[0] }}"
+            Port: 80
+          - Id: "{{ web02_ec2_out.instance_ids[0] }}"
             Port: 80
         state: present
         wait_timeout: 200
