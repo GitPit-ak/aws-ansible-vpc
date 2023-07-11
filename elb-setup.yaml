@@ -38,11 +38,11 @@
           - subnet-0204105b84cd54866
           - subnet-0c131de78d9f73937
         listeners:
-          DefaultActions:
-            TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-2:815569990111:targetgroup/Devop-TG/d548051753c82041"
-            TargetGroupName: "Devop-TG"
-            Type: "instance"
-          port: 80
-          Protocol: "http"
+          - DefaultActions:
+            - TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-2:815569990111:targetgroup/Devop-TG/d548051753c82041"
+              TargetGroupName: "Devop-TG"
+              Type: "instance"
+            port: 80
+            Protocol: "http"
         wait: true
 
