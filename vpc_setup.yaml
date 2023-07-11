@@ -238,6 +238,10 @@
         wait_timeout: 300
       register: web02_ec2_out
 
+
+    - name: Pause for 1.5 min
+      pause:
+        seconds: 90
     # - debug:
     #     var: web02_ec2_out.instance_ids[0]
 

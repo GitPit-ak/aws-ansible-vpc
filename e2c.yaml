@@ -26,8 +26,8 @@
       # delay: 10
       # ignore_errors: yes
 
-    - name: Pause for 20 seconds
+    - name: Pause for 1 min
       pause:
-        seconds: 20
+        seconds: 60
 
     
