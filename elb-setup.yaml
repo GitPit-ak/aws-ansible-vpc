@@ -27,13 +27,22 @@
           Project: devops
 
 
-    # - name: Setup ELB for web server
-    #   amazon.aws.elb_application_lb:
-    #     name: myalb
-    #     security_groups:
-    #       - sg-12345678
-    #       - my-sec-group
-    #     subnets:
-    #       - subnet-012345678
-    #       - subnet-abcdef000
-    #     # ip_address_type: "ipv4"
+    - name: Setup ELB for web server
+      amazon.aws.elb_application_lb:
+        name: Devops-ELB
+        ip_address_type: "ipv4"
+        vpc_id: vpc-03b60bcb73c20dab9
+        security_groups:
+          - "sg-0d687f254bd428569"
+        subnets:
+          - subnet-0204105b84cd54866
+          - subnet-0c131de78d9f73937
+        listeners:
+          DefaultActions:
+            TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-2:815569990111:targetgroup/Devop-TG/d548051753c82041"
+            TargetGroupName: "Devop-TG"
+            Type: "instance"
+          port: 80
+          Protocol: "http"
+        wait: true
+
