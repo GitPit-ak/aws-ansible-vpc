@@ -1,7 +1,7 @@
 ---
 
 - name: launch vpc setup playbook
-  import-playbook: vpc_setup.yaml
+  import_playbook: vpc_setup.yaml
 
 - name: launch elb setup playbook with new variable files
-  import-playbook: elb-setup.yaml
+  import_playbook: elb-setup.yaml
