@@ -238,7 +238,8 @@
         wait_timeout: 300
       register: web02_ec2_out
 
-
+      - debug:
+          var: web02_ec2_out
 
     - name: Setting host facts from variable
       ansible.builtin.set_fact:
@@ -252,6 +253,8 @@
         privRTid: "{{privRT_out.route_table.id}}"
         frontsgid: "{{front_sg_out.group_id}}"
         backsgid: "{{back_sg_out.group_id}}"
+        web01_ec2_out_id: "{{web01_ec2_out.instances.instance_id }}"
+        web02_ec2_out_id: "{{web01_ec2_out.instances.instance_id }}"
 
     - name: Create variable file from vpc output
       copy:
@@ -266,4 +269,6 @@
           privRTid: "{{privRT_out.route_table.id}}"
           frontsgid: "{{front_sg_out.group_id}}"
           backsgid: "{{back_sg_out.group_id}}"
+          web01_ec2_out_id: "{{web01_ec2_out.instances.instance_id }}"
+          web02_ec2_out_id: "{{web01_ec2_out.instances.instance_id }}"
         dest: vars/output_vars
