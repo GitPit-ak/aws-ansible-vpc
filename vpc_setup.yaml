@@ -111,9 +111,11 @@
         subnets:
           - "{{pubpriv1_out.subnet.id}}"
           - "{{pubpriv2_out.subnet.id}}"
-        # routes:
-        #   - dest: 0.0.0.0/0
-        #     gateway_id: "{{ NATGW_out.nat_gateway_id }}"
+        routes:
+          # - dest: 0.0.0.0/0
+          #   gateway_id: "{{ NATGW_out.nat_gateway_id }}"
+          - dest: 0.0.0.0/0
+            gateway_id: "{{igw_out.gateway_id}}"
       register: privRT_out
 
     - name: security group for frontend-sg
