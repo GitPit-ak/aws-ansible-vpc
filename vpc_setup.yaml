@@ -101,20 +101,20 @@
     #     if_exist_do_not_create: true
     #   register: NATGW_out
 
-    # - name: setup private subnet route table
-    #   ec2_vpc_route_table:
-    #     vpc_id: "{{vpc_out.vpc.id}}"
-    #     region: "{{region}}"
-    #     state: "{{state}}"
-    #     tags:
-    #       Name: Vprofile-PrivRT
-    #     subnets:
-    #       - "{{pubpriv1_out.subnet.id}}"
-    #       - "{{pubpriv2_out.subnet.id}}"
-    #     routes:
-    #       - dest: 0.0.0.0/0
-    #         gateway_id: "{{ NATGW_out.nat_gateway_id }}"
-    #   register: privRT_out
+    - name: setup private subnet route table
+      ec2_vpc_route_table:
+        vpc_id: "{{vpc_out.vpc.id}}"
+        region: "{{region}}"
+        state: "{{state}}"
+        tags:
+          Name: Vprofile-PrivRT
+        subnets:
+          - "{{pubpriv1_out.subnet.id}}"
+          - "{{pubpriv2_out.subnet.id}}"
+        # routes:
+        #   - dest: 0.0.0.0/0
+        #     gateway_id: "{{ NATGW_out.nat_gateway_id }}"
+      register: privRT_out
 
     - name: security group for frontend-sg
       amazon.aws.ec2_security_group:
