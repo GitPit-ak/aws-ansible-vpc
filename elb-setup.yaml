@@ -6,40 +6,35 @@
     - name: import outpur_var variable
       include_vars: vars/output_vars
     
-    - name: Setup ELB for web server
-      amazon.aws.elb_classic_lb:
-        name: "devops-ELB"
-        state: present
+    - name: Create Target Group for Devop-ELB
+      community.aws.elb_target_group:
+        name: Devop-TG
+        protocol: http
         region: us-east-2
-        # zones:
-        #   - "{{zone1}}"
-        #   - "{{zone2}}"
-        cross_az_load_balancing : true
-        instance_ids:
-          # - "{{web01_ec2_out_id}}"
-          # - "{{web02_ec2_out_id}}"
-          - "i-03f351c04414a5a6e"
-          - "i-066812c11c9a6eeab"
-        security_group_ids: "sg-007f6293b64e39fd9"
-        scheme: internet-facing
-        purge_instance_ids: true
-        stickiness:
-          - enabled 
-        subnets:
-          - "subnet-0c795a5ccb35a7b7b"
-        listeners:
-          - protocol: http
-            load_balancer_port: 80
-            instance_port: 80
-        # health_check:
-        #     ping_protocol: http # options are http, https, ssl, tcp
-        #     ping_port: 80
-        #     ping_path: "/index.html" # not required for tcp or ssl
-        #     response_timeout: 5 # seconds
-        #     interval: 30 # seconds
-        #     unhealthy_threshold: 2
-        #     healthy_threshold: 10
-        wait: true
-        wait_timeout: 300
-        tags:
-          project: devops
+        port: 80
+        vpc_id: vpc-03b60bcb73c20dab9
+        health_check_protocol: http
+        health_check_path: /
+        successful_response_codes: "200,250-260"
+        target_type: "instance"
+        targets:
+          - Id: i-0c397c9b7a19ec456
+            Port: 80
+        state: present
+        
+        wait_timeout: 200
+        wait: True
+        tag:
+          Project: devops
+
+
+    # - name: Setup ELB for web server
+    #   amazon.aws.elb_application_lb:
+    #     name: myalb
+    #     security_groups:
+    #       - sg-12345678
+    #       - my-sec-group
+    #     subnets:
+    #       - subnet-012345678
+    #       - subnet-abcdef000
+    #     # ip_address_type: "ipv4"
