@@ -240,7 +240,7 @@
 
 
     - debug:
-        var: web02_ec2_out.instance_id
+        var: web02_ec2_out.instance_ids
 
 
     - debug:
