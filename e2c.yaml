@@ -21,10 +21,13 @@
         wait: true
         wait_timeout: 300
       register: web02_ec2_out
-      # until: "web02_ec2_out.instance.state['Name'] == 'running' and web02_ec2_out.instance.state['SystemStatus']['Status'] == 'ok' and web02_ec2_out.instance.state['InstanceStatus']['Status'] == 'ok'"
+      # until: "web02_ec2_out.instance.state.name == 'running' and web02_ec2_out.instance.state['SystemStatus']['Status'] == 'ok' and web02_ec2_out.instance.state['InstanceStatus']['Status'] == 'ok'"
       # retries: 30
       # delay: 10
       # ignore_errors: yes
 
-    - debug:
-        var: web02_ec2_out 
+    - name: Pause for 20 seconds
+      pause:
+        seconds: 20
+
+    
