@@ -263,7 +263,6 @@
           privsub2id: "{{pubpriv2_out.subnet.id}}"
           igwid: "{{igw_out.gateway_id}}"
           pubRTid: "{{pubRT_out.route_table.id}}"
-
           privRTid: "{{privRT_out.route_table.id}}"
           frontsgid: "{{front_sg_out.group_id}}"
           backsgid: "{{back_sg_out.group_id}}"
