@@ -171,6 +171,7 @@
       copy:
         content: "{{key_out.key.private_key}}"
         dest: ./devops-key.pem
+        mode: 0600
       when: key_out.changed == true
 
 
