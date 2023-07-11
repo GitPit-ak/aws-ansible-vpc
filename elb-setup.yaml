@@ -3,4 +3,8 @@
   connection: local
   gather_facts: false
   tasks:
-    - name: 
+    - name: import outpur_var variable
+      include_vars: vars/output_vars
+    
+    - name: import outpur_var variable
+      include_vars: vars/output_vars

@@ -238,33 +238,32 @@
         wait_timeout: 300
       register: web02_ec2_out
 
-    # - debug:
-    #     var: "{{item}}"
-    #   loop:
-    #     - vpc_out.vpc.id
-    #     - pubsub1_out.subnet.id
-    #     - pubsub2_out.subnet.id
-    #     - pubpriv1_out.subnet.id
-    #     - pubpriv2_out.subnet.id
-    #     - igw_out.gateway_id
-    #     - pubRT_out.route_table.id
-    #     - NATGW_out.nat_gateway_id
-    #     - privRT_out.route_table.id
-    #     - front_sg_out.group_id
-    #     - back_sg_out.group_id
+    - set_fact:
+        vpcid: "{{vpc_out.vpc.id}}"
+        pubsub1id: "{{pubsub1_out.subnet.id}}"
+        pubsub2id: "{{pubsub2_out.subnet.id}}"
+        privsub1id: "{{pubpriv1_out.subnet.id}}"
+        privsub2id: "{{pubpriv2_out.subnet.id}}"
+        igwid: "{{igw_out.gateway_id}}"
+        pubRTid: "{{pubRT_out.route_table.id}}"
+        NATWGid: "{{NATGW_out.nat_gateway_id}}"
+        privRTid: "{{privRT_out.route_table.id}}"
+        frontsgid: "{{front_sg_out.group_id}}"
+        backsgid: "{{back_sg_out.group_id}}"
+      cacheable: yes
 
     - name: Create variable file from vpc output
       copy:
         content: |
-          vpcid: vpc_out.vpc.id
-          pubsub1id: pubsub1_out.subnet.id
-          pubsub2id: pubsub2_out.subnet.id
-          privsub1id: pubpriv1_out.subnet.id
-          privsub2id: pubpriv2_out.subnet.id
-          igwid: igw_out.gateway_id
-          pubRTid: pubRT_out.route_table.id
-          NATWGid: NATGW_out.nat_gateway_id
-          privRTid: privRT_out.route_table.id
-          frontsgid: front_sg_out.group_id
-          backsgid: back_sg_out.group_id
+          vpcid: "{{vpc_out.vpc.id}}"
+          pubsub1id: "{{pubsub1_out.subnet.id}}"
+          pubsub2id: "{{pubsub2_out.subnet.id}}"
+          privsub1id: "{{pubpriv1_out.subnet.id}}"
+          privsub2id: "{{pubpriv2_out.subnet.id}}"
+          igwid: "{{igw_out.gateway_id}}"
+          pubRTid: "{{pubRT_out.route_table.id}}"
+          NATWGid: "{{NATGW_out.nat_gateway_id}}"
+          privRTid: "{{privRT_out.route_table.id}}"
+          frontsgid: "{{front_sg_out.group_id}}"
+          backsgid: "{{back_sg_out.group_id}}"
         dest: vars/output_vars
