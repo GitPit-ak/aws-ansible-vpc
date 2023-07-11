@@ -250,8 +250,8 @@
         privRTid: "{{privRT_out.route_table.id}}"
         frontsgid: "{{front_sg_out.group_id}}"
         backsgid: "{{back_sg_out.group_id}}"
-        web01_ec2_out_id: "{{web01_ec2_out.instance_ids}}"
-        web02_ec2_out_id: "{{web01_ec2_out.instance_ids}}"
+        web01_ec2_out_id: "{{web01_ec2_out.instance_ids[0]}}"
+        web02_ec2_out_id: "{{web01_ec2_out.instance_ids[0]}}"
 
     - name: Create variable file from vpc output
       copy:
@@ -266,6 +266,6 @@
           privRTid: "{{privRT_out.route_table.id}}"
           frontsgid: "{{front_sg_out.group_id}}"
           backsgid: "{{back_sg_out.group_id}}"
-          web01_ec2_out_id: "{{web01_ec2_out.instance_ids}}"
-          web02_ec2_out_id: "{{web01_ec2_out.instance_ids}}"
+          web01_ec2_out_id: "{{web01_ec2_out.instance_ids[0]}"
+          web02_ec2_out_id: "{{web01_ec2_out.instance_ids[0]}}"
         dest: vars/output_vars
