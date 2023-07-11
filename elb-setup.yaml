@@ -6,7 +6,7 @@
     - name: import output_var variable
       include_vars: vars/output_vars
     - name: import vpc_vars variable
-      include_vars: vars/output_vars
+      include_vars: vars/vpc_vars
     
     - name: Create Target Group for Devop-ELB
       community.aws.elb_target_group:
