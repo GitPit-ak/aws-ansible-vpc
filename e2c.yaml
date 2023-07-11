@@ -7,7 +7,7 @@
       amazon.aws.ec2_instance:
         name: web02
         key_name: "devops-key"
-        region: "{{us-east-2}}"
+        region: "us-east-2"
         vpc_subnet_id: "{{subnet-0204105b84cd54866}}"
         instance_type: t2.micro
         security_group: "sg-0d687f254bd428569"
