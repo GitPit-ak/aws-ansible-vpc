@@ -1,0 +1,3 @@
+---
+- import-playbook: vpc_setup.yaml
+- import-playbook: elb-setup.yaml
