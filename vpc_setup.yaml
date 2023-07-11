@@ -238,34 +238,43 @@
         wait_timeout: 300
       register: web02_ec2_out
 
-    - name: Setting host facts from variable
-      ansible.builtin.set_fact:
-        vpcid: "{{vpc_out.vpc.id}}"
-        pubsub1id: "{{pubsub1_out.subnet.id}}"
-        pubsub2id: "{{pubsub2_out.subnet.id}}"
-        privsub1id: "{{pubpriv1_out.subnet.id}}"
-        privsub2id: "{{pubpriv2_out.subnet.id}}"
-        igwid: "{{igw_out.gateway_id}}"
-        pubRTid: "{{pubRT_out.route_table.id}}"
-        privRTid: "{{privRT_out.route_table.id}}"
-        frontsgid: "{{front_sg_out.group_id}}"
-        backsgid: "{{back_sg_out.group_id}}"
-        web01_ec2_out_id: "{{web01_ec2_out.instance_ids[0]}}"
-        web02_ec2_out_id: "{{web01_ec2_out.instance_ids[0]}}"
+    - debug:
+        var: web02_ec2_out.instance_ids[0]
 
-    - name: Create variable file from vpc output
-      copy:
-        content: |
-          vpcid: "{{vpc_out.vpc.id}}"
-          pubsub1id: "{{pubsub1_out.subnet.id}}"
-          pubsub2id: "{{pubsub2_out.subnet.id}}"
-          privsub1id: "{{pubpriv1_out.subnet.id}}"
-          privsub2id: "{{pubpriv2_out.subnet.id}}"
-          igwid: "{{igw_out.gateway_id}}"
-          pubRTid: "{{pubRT_out.route_table.id}}"
-          privRTid: "{{privRT_out.route_table.id}}"
-          frontsgid: "{{front_sg_out.group_id}}"
-          backsgid: "{{back_sg_out.group_id}}"
-          web01_ec2_out_id: "{{web01_ec2_out.instance_ids[0]}"
-          web02_ec2_out_id: "{{web01_ec2_out.instance_ids[0]}}"
-        dest: vars/output_vars
+
+    - debug:
+            var: web02_ec2_out.instance_ids
+
+
+
+    # - name: Setting host facts from variable
+    #   ansible.builtin.set_fact:
+    #     vpcid: "{{vpc_out.vpc.id}}"
+    #     pubsub1id: "{{pubsub1_out.subnet.id}}"
+    #     pubsub2id: "{{pubsub2_out.subnet.id}}"
+    #     privsub1id: "{{pubpriv1_out.subnet.id}}"
+    #     privsub2id: "{{pubpriv2_out.subnet.id}}"
+    #     igwid: "{{igw_out.gateway_id}}"
+    #     pubRTid: "{{pubRT_out.route_table.id}}"
+    #     privRTid: "{{privRT_out.route_table.id}}"
+    #     frontsgid: "{{front_sg_out.group_id}}"
+    #     backsgid: "{{back_sg_out.group_id}}"
+    #     web01_ec2_out_id: "{{web01_ec2_out.instance_ids[0]}}"
+    #     web02_ec2_out_id: "{{web01_ec2_out.instance_ids[0]}}"
+
+    # - name: Create variable file from vpc output
+    #   copy:
+    #     content: |
+    #       vpcid: "{{vpc_out.vpc.id}}"
+    #       pubsub1id: "{{pubsub1_out.subnet.id}}"
+    #       pubsub2id: "{{pubsub2_out.subnet.id}}"
+    #       privsub1id: "{{pubpriv1_out.subnet.id}}"
+    #       privsub2id: "{{pubpriv2_out.subnet.id}}"
+    #       igwid: "{{igw_out.gateway_id}}"
+    #       pubRTid: "{{pubRT_out.route_table.id}}"
+    #       privRTid: "{{privRT_out.route_table.id}}"
+    #       frontsgid: "{{front_sg_out.group_id}}"
+    #       backsgid: "{{back_sg_out.group_id}}"
+    #       web01_ec2_out_id: "{{web01_ec2_out.instance_ids[0]}"
+    #       web02_ec2_out_id: "{{web01_ec2_out.instance_ids[0]}}"
+    #     dest: vars/output_vars
