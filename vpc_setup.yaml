@@ -114,8 +114,6 @@
         routes:
           # - dest: 0.0.0.0/0
           #   gateway_id: "{{ NATGW_out.nat_gateway_id }}"
-          - dest: 0.0.0.0/0
-            gateway_id: "{{igw_out.gateway_id}}"
       register: privRT_out
 
     - name: security group for frontend-sg
@@ -151,6 +149,11 @@
             from_port: 80
             to_port: 80
             group_id: "{{front_sg_out.group_id}}"
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            group_id: "{{front_sg_out.group_id}}"
+
         tags:
           Name: backend-sg
       register: back_sg_out
