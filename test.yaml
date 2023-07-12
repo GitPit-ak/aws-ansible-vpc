@@ -45,7 +45,7 @@
       register: bastion_ec2_out
 
     - debug:
-        var: bastion_ec2_out.public_ip_address
+        var: bastion_ec2_out.instances.public_ip_address
     # - name: Pause for 1.5 min
     #   pause:
     #     seconds: 90
