@@ -28,4 +28,4 @@
         remote_src: yes
 
     - name: Copy file into web02 server
-      shell: sudo cp -r /tmp/"{{src2_path}}"/* "{{apache}}"
+      shell: cp -r /tmp/"{{src2_path}}"/* "{{apache}}"

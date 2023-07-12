@@ -26,9 +26,9 @@
         src: "{{src1}}"
         dest: /tmp/
         remote_src: yes
-
+#
     - name: Copy file into web01 server
       shell: 
-        cmd: sudo cp -r /tmp/"{{src1_path}}"/* "{{apache}}"
+        cmd: cp -r /tmp/"{{src1_path}}"/* "{{apache}}"
 
 
