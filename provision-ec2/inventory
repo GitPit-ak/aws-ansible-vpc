@@ -1,0 +1,4 @@
+web01 ansible_host=192.168.1.56 ansible_user=vagrant
+web02 ansible_host=192.168.1.57 ansible_user=vagrant
+bastion ansible_host=localhost ansible_connection=local
+

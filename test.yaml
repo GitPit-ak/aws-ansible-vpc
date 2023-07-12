@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: import output_var variable
+      include_vars: vars/output_vars
+    - name: import vpc_vars variable
+      include_vars: vars/vpc_vars
+
+    - name: create ec2 for bastion host
+      amazon.aws.ec2_instance:
+        name: "{{bastion_name}}"
+        key_name: "devops-key"
+        region: "{{region}}"
+        vpc_subnet_id: "subnet-0204105b84cd54866"
+        instance_type: t2.micro
+        security_group: "sg-0d687f254bd428569"
+        network:
+          # assign_public_ip: true
+          delete_on_termination: true
+        image_id: "{{bastion_ami}}"
+        tags:
+          project: devops
+          Name: bastion_host
+        wait: true
+        wait_timeout: 300
+      register: bastion_ec2_out
+
+
+    - name: copy pem file into bastion host
+      ansible.builtin.shell:
+        cmd: ls -l | grep log
+        # chdir: somedir/
+    
