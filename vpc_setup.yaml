@@ -297,3 +297,5 @@
       ansible.builtin.shell:
         cmd: scp -i aws-ansible-vpc/devops-key.pem -o StrictHostKeyChecking=no -r aws-ansible-vpc/ ubuntu@"{{bastion_ec2_out.instances[0].public_ip_address}}":~/
         chdir: "{{playbook_dir}}/../"
+
+        
