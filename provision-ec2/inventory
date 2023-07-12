@@ -1,0 +1,13 @@
+all:
+  hosts:
+    web01:
+      ansible_host: "{{ web01_ec2_out_priv_id }}"
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/aws-ansible-vpc/devops-key.pem
+    web02:
+      ansible_host: "{{ web02_ec2_out_priv_id }}"
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ~/aws-ansible-vpc/devops-key.pem
+    bastion:
+      ansible_host: localhost
+      ansible_connection: local

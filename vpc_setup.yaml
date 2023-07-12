@@ -3,7 +3,7 @@
   gather_facts: false
   tasks:
     - name: import vpc variable
-      include_vars: vpc_vars
+      include_vars: vars/vpc_vars
 
     - name: create devops vpc
       ec2_vpc_net:
@@ -92,14 +92,14 @@
             gateway_id: "{{igw_out.gateway_id}}"
       register: pubRT_out
 
-    # - name: Create NAT gateway 
-    #   ec2_vpc_nat_gateway:
-    #     state: "{{state}}"
-    #     subnet_id: "{{pubsub1_out.subnet.id}}"
-    #     wait: yes
-    #     region: "{{region}}"
-    #     if_exist_do_not_create: true
-    #   register: NATGW_out
+    - name: Create NAT gateway 
+      ec2_vpc_nat_gateway:
+        state: "{{state}}"
+        subnet_id: "{{pubsub1_out.subnet.id}}"
+        wait: yes
+        region: "{{region}}"
+        if_exist_do_not_create: true
+      register: NATGW_out
 
     - name: setup private subnet route table
       ec2_vpc_route_table:
@@ -111,9 +111,9 @@
         subnets:
           - "{{pubpriv1_out.subnet.id}}"
           - "{{pubpriv2_out.subnet.id}}"
-        # routes:
-          # - dest: 0.0.0.0/0
-          #   gateway_id: "{{ NATGW_out.nat_gateway_id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ NATGW_out.nat_gateway_id }}"
       register: privRT_out
 
     - name: security group for frontend-sg
@@ -237,3 +237,65 @@
         wait: true
         wait_timeout: 300
       register: web02_ec2_out
+
+    - name: Pause for 1.5 min
+      pause:
+        seconds: 90
+    # - debug:
+    #     var: web02_ec2_out.instance_ids[0]
+
+
+    # - debug:
+    #         var: web02_ec2_out.instance_ids
+
+    - name: Setting host facts from variable
+      ansible.builtin.set_fact:
+        vpcid: "{{vpc_out.vpc.id}}"
+        pubsub1id: "{{pubsub1_out.subnet.id}}"
+        pubsub2id: "{{pubsub2_out.subnet.id}}"
+        privsub1id: "{{pubpriv1_out.subnet.id}}"
+        privsub2id: "{{pubpriv2_out.subnet.id}}"
+        igwid: "{{igw_out.gateway_id}}"
+        pubRTid: "{{pubRT_out.route_table.id}}"
+        privRTid: "{{privRT_out.route_table.id}}"
+        frontsgid: "{{front_sg_out.group_id}}"
+        backsgid: "{{back_sg_out.group_id}}"
+        web01_ec1_out_id: "{{ web01_ec2_out.instance_ids[0] }}"
+        web02_ec2_out_id: "{{ web02_ec2_out.instance_ids[0] }}"
+        bastion_ec2_out_priv_id: "{{ bastion_ec2_out.instances[0].private_ip_address }}"
+        web01_ec2_out_priv_id: "{{ web01_ec2_out.instances[0].private_ip_address }}"
+        web02_ec2_out_priv_id: "{{ web02_ec2_out.instances[0].private_ip_address }}"
+        
+
+    - name: Create variable file from vpc output
+      copy:
+        content: |
+          vpcid: "{{vpc_out.vpc.id}}"
+          pubsub1id: "{{pubsub1_out.subnet.id}}"
+          pubsub2id: "{{pubsub2_out.subnet.id}}"
+          privsub1id: "{{pubpriv1_out.subnet.id}}"
+          privsub2id: "{{pubpriv2_out.subnet.id}}"
+          igwid: "{{igw_out.gateway_id}}"
+          pubRTid: "{{pubRT_out.route_table.id}}"
+          privRTid: "{{privRT_out.route_table.id}}"
+          frontsgid: "{{front_sg_out.group_id}}"
+          backsgid: "{{back_sg_out.group_id}}"
+          web01_ec1_out_id: "{{ web01_ec2_out.instance_ids[0] }}"
+          web02_ec2_out_id: "{{ web02_ec2_out.instance_ids[0] }}"
+          bastion_ec2_out_priv_id: "{{ bastion_ec2_out.instances[0].private_ip_address }}"
+          web01_ec2_out_priv_id: "{{ web01_ec2_out.instances[0].private_ip_address }}"
+          web02_ec2_out_priv_id: "{{ web02_ec2_out.instances[0].private_ip_address }}"
+        dest: vars/output_vars
+
+    - name: copy vars file into provision folder
+      copy:
+        src: vars/output_vars
+        dest: provision-ec2/group_vars/all
+
+
+    - name: copy repo folder into bastion host
+      ansible.builtin.shell:
+        cmd: scp -i aws-ansible-vpc/devops-key.pem -o StrictHostKeyChecking=no -r aws-ansible-vpc/ ubuntu@"{{bastion_ec2_out.instances[0].public_ip_address}}":~/
+        chdir: "{{playbook_dir}}/../"
+
+        

@@ -1,0 +1,34 @@
+- name: Setup both web servers
+  hosts: web01
+  become: yes
+  tasks:
+    # - name: import vpc variable
+    #   include_vars: ../vars/vpc_vars
+    # - name: import output vars
+    #   include_vars: ../vars/output_vars
+    # - name: import output vars
+    #   include_vars: ../vars/ec2_vars
+
+###Ubuntu deployment
+    - name: update and install packages
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+      loop:
+        - apache2
+        - unzip
+        - vim
+        - net-tools
+
+    - name: Deploying website on web01
+      ansible.builtin.unarchive:
+        src: "{{src1}}"
+        dest: /tmp/
+        remote_src: yes
+#
+    - name: Copy file into web01 server
+      shell: 
+        cmd: cp -r /tmp/"{{src1_path}}"/* "{{apache}}"
+
+

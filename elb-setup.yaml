@@ -1,0 +1,61 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: import output_var variable
+      include_vars: vars/output_vars
+    - name: import vpc_vars variable
+      include_vars: vars/vpc_vars
+    
+    - name: Create Target Group for Devop-ELB
+      community.aws.elb_target_group:
+        name: Devop-TG
+        protocol: http
+        region: "{{region}}"
+        port: 80
+        vpc_id: "{{vpcid}}"
+        health_check_protocol: http
+        health_check_path: /
+        successful_response_codes: "200,250-260"
+        target_type: "instance"
+        targets:
+          - Id: "{{ web01_ec2_out.instance_ids[0] }}"
+            Port: 80
+          - Id: "{{ web02_ec2_out.instance_ids[0] }}"
+            Port: 80
+        state: present
+        # wait_timeout: 200
+        # wait: True
+        tags:
+          Project: devops
+      register: elb_tgout
+
+    # - debug:
+    #     var: elb_tgout
+
+
+    - name: Setup ELB for web server
+      amazon.aws.elb_application_lb:
+        name: Devops-ELB
+        ip_address_type: "ipv4"
+        region: "{{region}}"
+        # vpc_id: vpc-03b60bcb73c20dab9
+        security_groups:
+          - "{{frontsgid}}"
+        subnets:
+          - "{{pubsub1id}}"
+          - "{{pubsub2id}}"
+        listeners:
+          - DefaultActions:
+            - TargetGroupName: "Devop-TG"
+              Type: "forward"
+            Port: 80
+            Protocol: "HTTP"
+        wait: true
+        tags:
+          Project: devops
+      register: devops_elb
+
+    # - debug:
+    #     var: devops_elb

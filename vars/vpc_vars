@@ -22,5 +22,5 @@ zone2: us-east-2b
 state: present
 
 ##
-bastion_ami: ami-069d73f3235b535bd
+bastion_ami: ami-024e6efaf93d85776 #ubuntu_2022
 bastion_name: bastion-host
