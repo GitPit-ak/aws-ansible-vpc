@@ -34,6 +34,8 @@ Overall, our setup ensures that our web servers are kept safe within the private
 - Login into bastion server 
 - You will get the repo folder on your home directory
 - move to provision-ec2 folder and run the main.yml after instaling ansible on this server.
+
+
     #######This playbook will setup
     - Install requied pakages for web server
     - download dependency from the internet
