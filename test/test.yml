@@ -3,6 +3,6 @@
   become: yes
   tasks:
   - name: Insert/Update "Match User" configuration block in /etc/ssh/sshd_config
-    ansible.builtin.blockinfile:
-      path: /home/ubuntu/aws-ansible-vpc/vars/output_vars
-      block: /home/ubuntu/aws-ansible-vpc/vars/vpc_vars
+    ansible.builtin.copy:
+      content: /home/ubuntu/aws-ansible-vpc/vars/output_vars
+      dest: /home/ubuntu/aws-ansible-vpc/vars/vpc_vars
