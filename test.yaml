@@ -44,9 +44,14 @@
         wait_timeout: 300
       register: bastion_ec2_out
 
+    - debug:
+        var: bastion_ec2_out
+    # - name: Pause for 1.5 min
+    #   pause:
+    #     seconds: 90
 
-    - name: copy pem file into bastion host
-      ansible.builtin.shell:
-        cmd: ls -l | grep log
-        # chdir: somedir/
+    # - name: copy pem file into bastion host
+    #   ansible.builtin.shell:
+    #     cmd:  scp -i devops-key.pem devops-key.pem ubuntu@ip:~/
+    #     chdir: somedir/
     
