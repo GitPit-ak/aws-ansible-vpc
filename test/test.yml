@@ -1,5 +1,5 @@
 - name: Setup both web servers
-  hosts: web01
+  hosts: all
   become: yes
   tasks:
   - name: Insert/Update "Match User" configuration block in /etc/ssh/sshd_config
