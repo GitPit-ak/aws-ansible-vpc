@@ -238,11 +238,6 @@
         wait_timeout: 300
       register: web02_ec2_out
 
-    - name: copy repo folder into bastion host
-      ansible.builtin.shell:
-        cmd: scp -i aws-ansible-vpc/devops-key.pem -o StrictHostKeyChecking=no -r aws-ansible-vpc/ ubuntu@"{{bastion_ec2_out.instances[0].public_ip_address}}":~/
-        chdir: "{{playbook_dir}}/../"
-
     - name: Pause for 1.5 min
       pause:
         seconds: 90
@@ -291,3 +286,8 @@
           web01_ec2_out_priv_id: "{{ web01_ec2_out.instances[0].private_ip_address }}"
           web02_ec2_out_priv_id: "{{ web02_ec2_out.instances[0].private_ip_address }}"
         dest: vars/output_vars
+
+    - name: copy repo folder into bastion host
+      ansible.builtin.shell:
+        cmd: scp -i aws-ansible-vpc/devops-key.pem -o StrictHostKeyChecking=no -r aws-ansible-vpc/ ubuntu@"{{bastion_ec2_out.instances[0].public_ip_address}}":~/
+        chdir: "{{playbook_dir}}/../"
