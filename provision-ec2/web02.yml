@@ -1,5 +1,6 @@
 - name: Setup both web servers
-  hosts: bastion
+  hosts: web02
+  become: yes
   tasks:
     # - name: import vpc variable
     #   include_vars: ../vars/vpc_vars
@@ -20,14 +21,11 @@
         - vim
         - net-tools
 
-    - name: Deploying website on bastion
+    - name: Deploying website on web02
       ansible.builtin.unarchive:
-        src: "{{src1}}"
+        src: "{{src2}}"
         dest: /tmp/
         remote_src: yes
-      when: ansible_nodename == "bastion"
 
-    - name: Copy file into bastion server
-      shell: sudo cp -r /tmp/"{{src1_path}}"/* "{{apache}}"
-      when: ansible_nodename == "bastion"
-
+    - name: Copy file into web02 server
+      shell: sudo cp -r /tmp/"{{src2_path}}"/* "{{apache}}"
