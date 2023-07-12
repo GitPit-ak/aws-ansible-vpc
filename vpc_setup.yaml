@@ -287,8 +287,10 @@
           web02_ec2_out_priv_id: "{{ web02_ec2_out.instances[0].private_ip_address }}"
         dest: vars/output_vars
 
-    - name: Append all vars into provision folder
-      
+    - name: copy vars file into provision folder
+      copy:
+        src: vars/output_vars
+        dest: provision-ec2/group_vars/all
 
 
     - name: copy repo folder into bastion host

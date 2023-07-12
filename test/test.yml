@@ -9,6 +9,6 @@
 
   - name: Append file output to another file
     lineinfile:
-      path: {{ /home/ubuntu/aws-ansible-vpc/vars/vpc_vars }}
+      path: {{ "/home/ubuntu/aws-ansible-vpc/vars/vpc_vars" }}
       line: "{{ lookup('file', /home/ubuntu/aws-ansible-vpc/vars/output_vars) }}"
       insertafter: EOF
