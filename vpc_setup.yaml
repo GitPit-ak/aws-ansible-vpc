@@ -92,14 +92,14 @@
             gateway_id: "{{igw_out.gateway_id}}"
       register: pubRT_out
 
-    # - name: Create NAT gateway 
-    #   ec2_vpc_nat_gateway:
-    #     state: "{{state}}"
-    #     subnet_id: "{{pubsub1_out.subnet.id}}"
-    #     wait: yes
-    #     region: "{{region}}"
-    #     if_exist_do_not_create: true
-    #   register: NATGW_out
+    - name: Create NAT gateway 
+      ec2_vpc_nat_gateway:
+        state: "{{state}}"
+        subnet_id: "{{pubsub1_out.subnet.id}}"
+        wait: yes
+        region: "{{region}}"
+        if_exist_do_not_create: true
+      register: NATGW_out
 
     - name: setup private subnet route table
       ec2_vpc_route_table:
@@ -111,9 +111,9 @@
         subnets:
           - "{{pubpriv1_out.subnet.id}}"
           - "{{pubpriv2_out.subnet.id}}"
-        # routes:
-          # - dest: 0.0.0.0/0
-          #   gateway_id: "{{ NATGW_out.nat_gateway_id }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ NATGW_out.nat_gateway_id }}"
       register: privRT_out
 
     - name: security group for frontend-sg
@@ -267,6 +267,10 @@
         backsgid: "{{back_sg_out.group_id}}"
         web01_ec1_out_id: "{{ web01_ec2_out.instance_ids[0] }}"
         web02_ec2_out_id: "{{ web02_ec2_out.instance_ids[0] }}"
+        bastion_ec2_out_priv_id: "{{ bastion_ec2_out.instances[0].private_ip_address }}"
+        web01_ec2_out_priv_id: "{{ web01_ec2_out.instances[0].private_ip_address }}"
+        web02_ec2_out_priv_id: "{{ web02_ec2_out.instances[0].private_ip_address }}"
+        
 
     - name: Create variable file from vpc output
       copy:
@@ -283,4 +287,7 @@
           backsgid: "{{back_sg_out.group_id}}"
           web01_ec1_out_id: "{{ web01_ec2_out.instance_ids[0] }}"
           web02_ec2_out_id: "{{ web02_ec2_out.instance_ids[0] }}"
+          bastion_ec2_out_priv_id: "{{ bastion_ec2_out.instances[0].private_ip_address }}"
+          web01_ec2_out_priv_id: "{{ web01_ec2_out.instances[0].private_ip_address }}"
+          web02_ec2_out_priv_id: "{{ web02_ec2_out.instances[0].private_ip_address }}"
         dest: vars/output_vars

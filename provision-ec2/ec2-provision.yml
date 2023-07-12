@@ -1,10 +1,43 @@
-- hosts: localhost
-  connection: local
-  gather_facts: false
+- name: Setup both web servers
+  hosts: all
   tasks:
-    - name: import vpc variable
-      include_vars: ../vars/vpc_vars
+    # - name: import vpc variable
+    #   include_vars: ../vars/vpc_vars
     - name: import output vars
       include_vars: ../vars/output_vars
+    - name: import output vars
+      include_vars: ../vars/ec2_vars
 
-      
+###Ubuntu deployment
+    - name: update and install packages
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+      loop:
+        - apache2
+        - unzip
+        - vim
+        - net-tools
+
+    - name: Deploying website on web01
+      ansible.builtin.unarchive:
+        src: "{{src1}}"
+        dest: /tmp/
+        remote_src: yes
+      when: ansible_nodename == "web01"
+
+    - name: Deploying website on web02
+      ansible.builtin.unarchive:
+        src: "{{src2}}"
+        dest: /tmp/
+        remote_src: yes
+      when: ansible_nodename == "web02"
+
+    - name: Copy file into web01 server
+      shell: sudo cp -r /tmp/"{{src1_path}}"/* "{{apache}}"
+      when: ansible_nodename == "web01"
+
+    - name: Copy file into web02 server
+      shell: sudo cp -r /tmp/"{{src2_path}}"/* "{{apache}}"
+      when: ansible_nodename == "web02"

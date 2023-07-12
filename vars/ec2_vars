@@ -1,0 +1,7 @@
+src1: https://templatemo.com/tm-zip-files-2020/templatemo_516_known.zip
+src1_path: templatemo_516_known
+
+src2: https://www.tooplate.com/zip-templates/2133_moso_interior.zip
+src2_path: 2133_moso_interior
+
+apache: /var/www/html/
