@@ -1,0 +1,10 @@
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: import vpc variable
+      include_vars: ../vars/vpc_vars
+    - name: import output vars
+      include_vars: ../vars/output_vars
+
+      

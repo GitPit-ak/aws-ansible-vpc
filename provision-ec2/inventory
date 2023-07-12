@@ -1,4 +1,4 @@
-web01 ansible_host=192.168.1.56 ansible_user=vagrant
-web02 ansible_host=192.168.1.57 ansible_user=vagrant
+web01 ansible_host=192.168.1.56 ansible_user=vagrant ansible_ssh_private_key_file = ~/devops-key.pem
+web02 ansible_host=192.168.1.57 ansible_user=vagrant ansible_ssh_private_key_file = ~/devops-key.pem
 bastion ansible_host=localhost ansible_connection=local
 
