@@ -45,7 +45,7 @@
       register: bastion_ec2_out
 
     - debug:
-        var: ansible_env.PWD
+        var: playbook_dir 
     # - debug:
     #     var: bastion_ec2_out.instances[0].network_interfaces[0].association.public_ip
     # - name: Pause for 1.5 min
@@ -55,6 +55,6 @@
     - name: copy pem file into bastion host
       ansible.builtin.shell:
         cmd: " scp -i devops-key.pem -o StrictHostKeyChecking=no devops-key.pem ubuntu@18.222.108.236:~/ "
-        chdir: "{{ansible_env.PWD}}"
+        chdir: "{{playbook_dir}}"
 
     
