@@ -8,6 +8,23 @@
     - name: import vpc_vars variable
       include_vars: vars/vpc_vars
 
+    - name: create a new EC2 key pair
+      amazon.aws.ec2_key:
+        name: devops-key
+        force: true
+        region: "{{region}}"
+      register: key_out
+
+    # - debug:
+    #     var: key_out
+
+    - name: saving the priv key
+      copy:
+        content: "{{key_out.key.private_key}}"
+        dest: ./devops-key.pem
+        mode: 0600
+      when: key_out.changed == true
+
     - name: create ec2 for bastion host
       amazon.aws.ec2_instance:
         name: "{{bastion_name}}"
